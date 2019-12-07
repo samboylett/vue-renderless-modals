@@ -1,7 +1,8 @@
 {
   "name": "vue-renderless-modals",
-  "version": "0.1.0",
-  "private": true,
+  "version": "0.0.1",
+  "author": "Sam Boylett",
+  "license": "GNU GPLv3",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
