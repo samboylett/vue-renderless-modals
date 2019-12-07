@@ -21,6 +21,23 @@ const RenderlessModals = {
 
                 return id;
             },
+
+            setModalData(id, data) {
+                store.list = store.list.map(modal => {
+                    if (modal.id !== id) {
+                        return modal;
+                    }
+
+                    return {
+                        ...modal,
+                        ...data,
+                    };
+                });
+            },
+
+            open(id) {
+                this.setModalData(id, { open: true });
+            },
         };
     },
 };

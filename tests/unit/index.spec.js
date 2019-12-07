@@ -53,6 +53,33 @@ describe('RenderlessModals', () => {
                     }]);
                 });
             });
+
+            describe('when modals registered', () => {
+                let ids = [];
+
+                beforeEach(() => {
+                    ids = [
+                        vm.$modals.register(),
+                        vm.$modals.register(),
+                        vm.$modals.register(),
+                    ];
+                });
+
+                describe('open', () => {
+                    beforeEach(() => {
+                        vm.$modals.open(ids[1]);
+                    });
+
+                    it('will open the modal with that id', () => {
+                        expect(vm.$modals.store.list[1].open).toBe(true);
+                    });
+
+                    it('will not open other modals', () => {
+                        expect(vm.$modals.store.list[0].open).toBe(false);
+                        expect(vm.$modals.store.list[2].open).toBe(false);
+                    });
+                });
+            });
         });
     });
 });
