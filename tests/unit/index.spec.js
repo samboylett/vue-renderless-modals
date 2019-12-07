@@ -1,7 +1,9 @@
-import { mount, createLocalVue } from '@vue/test-utils';
+import { mount, shallowMount, createLocalVue } from '@vue/test-utils';
+import PortalVue from 'portal-vue';
 
 import RenderlessModals from '../../src/index';
 import BaseModal from '../../src/components/BaseModal';
+import ModalsTarget from '../../src/components/ModalsTarget';
 
 describe('RenderlessModals', () => {
     let localVue;
@@ -9,6 +11,7 @@ describe('RenderlessModals', () => {
     beforeEach(() => {
         localVue = createLocalVue();
 
+        localVue.use(PortalVue)
         localVue.use(RenderlessModals);
     });
 
@@ -43,8 +46,11 @@ describe('RenderlessModals', () => {
                 };
 
                 let wrapper;
+                let wrapperTarget;
 
                 beforeEach(() => {
+                    wrapperTarget = shallowMount(ModalsTarget, { localVue });
+
                     wrapper = mount(UserModal, {
                         localVue,
                         propsData: {
@@ -68,6 +74,17 @@ describe('RenderlessModals', () => {
 
                 it('adds to the store list', () => {
                     expect(wrapper.vm.$modals.store.list.length).toBe(1);
+                });
+
+                describe('ModalsTarget', () => {
+                    it('renders the portal targets for every modal', () => {
+                        const targets = wrapperTarget.findAll('portal-target-stub');
+
+                        expect(targets.length).toBe(1);
+
+                        expect(targets.at(0).props().name)
+                            .toBe(`modal-${ wrapper.vm.baseModalProps.id }`);
+                    });
                 });
 
                 describe('when destroyed', () => {

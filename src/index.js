@@ -26,6 +26,10 @@ const RenderlessModals = {
                 return id;
             },
 
+            getPortalName(id) {
+                return `modal-${ id }`;
+            },
+
             unregister(id) {
                 store.list = store.list.filter(modal => modal.id !== id);
             },

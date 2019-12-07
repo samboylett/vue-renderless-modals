@@ -1,12 +1,12 @@
 <template>
-    <div class="base-modal">
+    <portal :to="portalName">
         <slot
             v-bind="modal"
             :open="open"
             :close="close"
             :toggle="toggle"
         />
-    </div>
+    </portal>
 </template>
 
 <script>
@@ -34,6 +34,10 @@
         computed: {
             modal() {
                 return this.store.list.find(({ id }) => id === this.id);
+            },
+
+            portalName() {
+                return this.$modals.getPortalName(this.id);
             },
         },
 
