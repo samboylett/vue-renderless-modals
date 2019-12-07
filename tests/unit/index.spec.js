@@ -40,16 +40,16 @@ describe('RenderlessModals', () => {
                     vm.$modals.register();
                     expect(vm.$modals.store.list).toEqual([{
                         id: 0,
-                        open: false,
+                        isOpen: false,
                     }]);
 
                     vm.$modals.register();
                     expect(vm.$modals.store.list).toEqual([{
                         id: 0,
-                        open: false,
+                        isOpen: false,
                     }, {
                         id: 1,
-                        open: false,
+                        isOpen: false,
                     }]);
                 });
             });
@@ -71,12 +71,12 @@ describe('RenderlessModals', () => {
                     });
 
                     it('will open the modal with that id', () => {
-                        expect(vm.$modals.store.list[1].open).toBe(true);
+                        expect(vm.$modals.store.list[1].isOpen).toBe(true);
                     });
 
                     it('will not open other modals', () => {
-                        expect(vm.$modals.store.list[0].open).toBe(false);
-                        expect(vm.$modals.store.list[2].open).toBe(false);
+                        expect(vm.$modals.store.list[0].isOpen).toBe(false);
+                        expect(vm.$modals.store.list[2].isOpen).toBe(false);
                     });
                 });
 
@@ -90,12 +90,12 @@ describe('RenderlessModals', () => {
                     });
 
                     it('will close the modal with that id', () => {
-                        expect(vm.$modals.store.list[1].open).toBe(false);
+                        expect(vm.$modals.store.list[1].isOpen).toBe(false);
                     });
 
                     it('will not close other modals', () => {
-                        expect(vm.$modals.store.list[0].open).toBe(true);
-                        expect(vm.$modals.store.list[2].open).toBe(true);
+                        expect(vm.$modals.store.list[0].isOpen).toBe(true);
+                        expect(vm.$modals.store.list[2].isOpen).toBe(true);
                     });
                 });
             });

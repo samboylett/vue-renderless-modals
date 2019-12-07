@@ -15,7 +15,7 @@ const RenderlessModals = {
                     ...store.list,
                     {
                         id,
-                        open: false,
+                        isOpen: false,
                     },
                 ];
 
@@ -36,11 +36,11 @@ const RenderlessModals = {
             },
 
             open(id) {
-                this.setModalData(id, { open: true });
+                this.setModalData(id, { isOpen: true });
             },
 
             close(id) {
-                this.setModalData(id, { open: false });
+                this.setModalData(id, { isOpen: false });
             },
         };
     },
