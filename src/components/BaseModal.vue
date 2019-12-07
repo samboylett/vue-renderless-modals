@@ -21,9 +21,13 @@
         },
 
         data() {
+            const id = this.$modals.register(this.name);
+
+            this.$emit('id', id);
+
             return {
                 store: this.$modals.store,
-                id: this.$modals.register(this.name),
+                id,
             };
         },
 

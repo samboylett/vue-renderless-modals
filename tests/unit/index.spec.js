@@ -23,7 +23,10 @@ describe('RenderlessModals', () => {
                     props: ['name'],
 
                     template: `
-                        <base-modal :name="name">
+                        <base-modal
+                            :name="name"
+                            @id="$emit('id', $event)"
+                        >
                             <template
                                 #default="slotProps"
                             >
@@ -52,6 +55,11 @@ describe('RenderlessModals', () => {
 
                 it('gets an id', () => {
                     expect(wrapper.vm.baseModalProps.id).toBe(name || 0);
+                });
+
+                it('emits its id', () => {
+                    expect(wrapper.emitted().id)
+                        .toEqual([[wrapper.vm.baseModalProps.id]]);
                 });
 
                 it('has a default isOpen of false', () => {
