@@ -38,6 +38,10 @@ const RenderlessModals = {
             open(id) {
                 this.setModalData(id, { open: true });
             },
+
+            close(id) {
+                this.setModalData(id, { open: false });
+            },
         };
     },
 };
