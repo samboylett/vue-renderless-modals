@@ -22,6 +22,10 @@ const RenderlessModals = {
                 return id;
             },
 
+            unregister(id) {
+                store.list = store.list.filter(modal => modal.id !== id);
+            },
+
             setModalData(id, data) {
                 store.list = store.list.map(modal => {
                     if (modal.id !== id) {

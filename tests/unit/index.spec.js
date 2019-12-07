@@ -165,6 +165,22 @@ describe('RenderlessModals', () => {
                     ];
                 });
 
+                describe('unregister', () => {
+                    beforeEach(() => {
+                        vm.$modals.unregister(ids[1]);
+                    });
+
+                    it('removes the modal from the list', () => {
+                        expect(vm.$modals.store.list).toEqual([{
+                            id: ids[0],
+                            isOpen: false,
+                        }, {
+                            id: ids[2],
+                            isOpen: false,
+                        }]);
+                    });
+                });
+
                 describe('open', () => {
                     beforeEach(() => {
                         vm.$modals.open(ids[1]);
