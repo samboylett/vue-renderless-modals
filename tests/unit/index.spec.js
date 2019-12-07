@@ -44,6 +44,71 @@ describe('RenderlessModals', () => {
         it('gets an id', () => {
             expect(wrapper.vm.baseModalProps.id).toBe(0);
         });
+
+        it('has a default isOpen of false', () => {
+            expect(wrapper.vm.baseModalProps.isOpen).toBe(false);
+        });
+
+        describe('toggle with no arguments', () => {
+            beforeEach(() => {
+                wrapper.vm.baseModalProps.toggle();
+            });
+
+            it('opens the modal', () => {
+                expect(wrapper.vm.baseModalProps.isOpen).toBe(true);
+            });
+        });
+
+        describe('toggle with false', () => {
+            beforeEach(() => {
+                wrapper.vm.baseModalProps.toggle(false);
+            });
+
+            it('does nothing', () => {
+                expect(wrapper.vm.baseModalProps.isOpen).toBe(false);
+            });
+        });
+
+        describe('open', () => {
+            beforeEach(() => {
+                wrapper.vm.baseModalProps.open();
+            });
+
+            it('opens the modal', () => {
+                expect(wrapper.vm.baseModalProps.isOpen).toBe(true);
+            });
+
+            describe('close', () => {
+                beforeEach(() => {
+                    expect(wrapper.vm.baseModalProps.isOpen).toBe(true);
+                    wrapper.vm.baseModalProps.close();
+                });
+
+                it('closes the modal', () => {
+                    expect(wrapper.vm.baseModalProps.isOpen).toBe(false);
+                });
+            });
+
+            describe('toggle with no arguments', () => {
+                beforeEach(() => {
+                    wrapper.vm.baseModalProps.toggle();
+                });
+
+                it('closes the modal', () => {
+                    expect(wrapper.vm.baseModalProps.isOpen).toBe(false);
+                });
+            });
+
+            describe('toggle with true', () => {
+                beforeEach(() => {
+                    wrapper.vm.baseModalProps.toggle(true);
+                });
+
+                it('does nothing', () => {
+                    expect(wrapper.vm.baseModalProps.isOpen).toBe(true);
+                });
+            });
+        });
     });
 
     describe('vm', () => {

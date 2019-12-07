@@ -4,6 +4,7 @@
             v-bind="modal"
             :open="open"
             :close="close"
+            :toggle="toggle"
         />
     </div>
 </template>
