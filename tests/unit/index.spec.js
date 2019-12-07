@@ -49,6 +49,29 @@ describe('RenderlessModals', () => {
             expect(wrapper.vm.baseModalProps.isOpen).toBe(false);
         });
 
+        it('adds to the store list', () => {
+            expect(wrapper.vm.$modals.store.list.length).toBe(1);
+        });
+
+        describe('when destroyed', () => {
+            let id;
+
+            beforeEach(() => {
+                id = wrapper.vm.baseModalProps.id;
+
+                wrapper.vm.$modals.register();
+                wrapper.vm.$modals.register();
+                expect(wrapper.vm.$modals.store.list.length).toBe(3);
+                wrapper.destroy();
+            });
+
+            it('removes the modal from the list', () => {
+                expect(wrapper.vm.$modals.store.list.length).toBe(2);
+                expect(wrapper.vm.$modals.store.list)
+                    .not.toContain(expect.objectContaining({ id }));
+            });
+        });
+
         describe('toggle with no arguments', () => {
             beforeEach(() => {
                 wrapper.vm.baseModalProps.toggle();

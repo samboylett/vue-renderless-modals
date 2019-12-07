@@ -39,5 +39,9 @@
                 this[state ? 'open' : 'close']();
             },
         },
+
+        beforeDestroy() {
+            this.$modals.unregister(this.id);
+        },
     };
 </script>
