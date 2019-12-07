@@ -1,6 +1,6 @@
 <template>
     <div class="base-modal">
-        <slot :open="open" />
+        <slot v-bind="modal" />
     </div>
 </template>
 
@@ -8,10 +8,16 @@
     export default {
         name: 'base-modal',
 
-        props: {
-            open: {
-                type: Boolean,
-                default: false,
+        data() {
+            return {
+                store: this.$modals.store,
+                id: this.$modals.register(),
+            };
+        },
+
+        computed: {
+            modal() {
+                return this.store.list.find(({ id }) => id === this.id);
             },
         },
     };
