@@ -1,6 +1,7 @@
 import { mount, createLocalVue } from '@vue/test-utils';
 
 import RenderlessModals from '../../src/index';
+import BaseModal from '../../src/components/BaseModal';
 
 describe('RenderlessModals', () => {
     let localVue;
@@ -9,6 +10,40 @@ describe('RenderlessModals', () => {
         localVue = createLocalVue();
 
         localVue.use(RenderlessModals);
+    });
+
+    describe('BaseModal', () => {
+        const UserModal = {
+            components: {
+                BaseModal,
+            },
+
+            template: `
+                <base-modal>
+                    <template
+                        #default="slotProps"
+                    >
+                        {{ setProps(slotProps) }}
+                    </template>
+                </base-modal>
+            `,
+
+            methods: {
+                setProps(slotProps) {
+                    this.baseModalProps = slotProps;
+                },
+            },
+        };
+
+        let wrapper;
+
+        beforeEach(() => {
+            wrapper = mount(UserModal, { localVue });
+        });
+
+        it('gets an id', () => {
+            expect(wrapper.vm.baseModalProps.id).toBe(0);
+        });
     });
 
     describe('vm', () => {

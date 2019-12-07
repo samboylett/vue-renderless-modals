@@ -1,6 +1,10 @@
 <template>
     <div class="base-modal">
-        <slot v-bind="modal" />
+        <slot
+            v-bind="modal"
+            :open="open"
+            :close="close"
+        />
     </div>
 </template>
 
@@ -18,6 +22,20 @@
         computed: {
             modal() {
                 return this.store.list.find(({ id }) => id === this.id);
+            },
+        },
+
+        methods: {
+            open() {
+                this.$modals.open(this.id);
+            },
+
+            close() {
+                this.$modals.close(this.id);
+            },
+
+            toggle(state = !this.modal.isOpen) {
+                this[state ? 'open' : 'close']();
             },
         },
     };
