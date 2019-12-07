@@ -8,8 +8,12 @@ const RenderlessModals = {
         Vue.prototype.$modals = {
             store,
 
-            register() {
-                const id = store.idCounter++;
+            register(name = null) {
+                const id = name || store.idCounter++;
+
+                if (store.list.some(modal => modal.id === id)) {
+                    throw new Error(`Modal with id "${ id }" already exists`);
+                }
 
                 store.list = [
                     ...store.list,

@@ -175,6 +175,25 @@ describe('RenderlessModals', () => {
                         isOpen: false,
                     }]);
                 });
+
+                describe('when called with name', () => {
+                    beforeEach(() => {
+                        vm.$modals.register('foo-bar');
+                    });
+
+                    it('adds modal using name as id', () => {
+                        expect(vm.$modals.store.list).toEqual([{
+                            id: 'foo-bar',
+                            isOpen: false,
+                        }]);
+                    });
+
+                    it('throws if trying to add an existing name', () => {
+                        expect(() => {
+                            vm.$modals.register('foo-bar');
+                        }).toThrow(new Error('Modal with id "foo-bar" already exists'));
+                    });
+                });
             });
 
             describe('when modals registered', () => {
