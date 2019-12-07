@@ -1,9 +1,10 @@
 import { mount, shallowMount, createLocalVue } from '@vue/test-utils';
 import PortalVue from 'portal-vue';
 
-import RenderlessModals from '../../src/index';
-import BaseModal from '../../src/components/BaseModal';
-import ModalsTarget from '../../src/components/ModalsTarget';
+import RenderlessModals, {
+    BaseModal,
+    ModalsTarget,
+} from '../../src/index';
 
 describe('RenderlessModals', () => {
     let localVue;

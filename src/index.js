@@ -1,3 +1,11 @@
+import BaseModal from './components/BaseModal';
+import ModalsTarget from './components/ModalsTarget';
+
+export {
+    BaseModal,
+    ModalsTarget,
+};
+
 const RenderlessModals = {
     install(Vue) {
         const store = {
