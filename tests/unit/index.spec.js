@@ -13,122 +13,133 @@ describe('RenderlessModals', () => {
     });
 
     describe('BaseModal', () => {
-        const UserModal = {
-            components: {
-                BaseModal,
-            },
+        [null, 'foo-bar'].forEach(name => {
+            describe(name ? 'when name set' : 'when name not set', () => {
+                const UserModal = {
+                    components: {
+                        BaseModal,
+                    },
 
-            template: `
-                <base-modal>
-                    <template
-                        #default="slotProps"
-                    >
-                        {{ setProps(slotProps) }}
-                    </template>
-                </base-modal>
-            `,
+                    props: ['name'],
 
-            methods: {
-                setProps(slotProps) {
-                    this.baseModalProps = slotProps;
-                },
-            },
-        };
+                    template: `
+                        <base-modal :name="name">
+                            <template
+                                #default="slotProps"
+                            >
+                                {{ setProps(slotProps) }}
+                            </template>
+                        </base-modal>
+                    `,
 
-        let wrapper;
+                    methods: {
+                        setProps(slotProps) {
+                            this.baseModalProps = slotProps;
+                        },
+                    },
+                };
 
-        beforeEach(() => {
-            wrapper = mount(UserModal, { localVue });
-        });
+                let wrapper;
 
-        it('gets an id', () => {
-            expect(wrapper.vm.baseModalProps.id).toBe(0);
-        });
-
-        it('has a default isOpen of false', () => {
-            expect(wrapper.vm.baseModalProps.isOpen).toBe(false);
-        });
-
-        it('adds to the store list', () => {
-            expect(wrapper.vm.$modals.store.list.length).toBe(1);
-        });
-
-        describe('when destroyed', () => {
-            let id;
-
-            beforeEach(() => {
-                id = wrapper.vm.baseModalProps.id;
-
-                wrapper.vm.$modals.register();
-                wrapper.vm.$modals.register();
-                expect(wrapper.vm.$modals.store.list.length).toBe(3);
-                wrapper.destroy();
-            });
-
-            it('removes the modal from the list', () => {
-                expect(wrapper.vm.$modals.store.list.length).toBe(2);
-                expect(wrapper.vm.$modals.store.list)
-                    .not.toContain(expect.objectContaining({ id }));
-            });
-        });
-
-        describe('toggle with no arguments', () => {
-            beforeEach(() => {
-                wrapper.vm.baseModalProps.toggle();
-            });
-
-            it('opens the modal', () => {
-                expect(wrapper.vm.baseModalProps.isOpen).toBe(true);
-            });
-        });
-
-        describe('toggle with false', () => {
-            beforeEach(() => {
-                wrapper.vm.baseModalProps.toggle(false);
-            });
-
-            it('does nothing', () => {
-                expect(wrapper.vm.baseModalProps.isOpen).toBe(false);
-            });
-        });
-
-        describe('open', () => {
-            beforeEach(() => {
-                wrapper.vm.baseModalProps.open();
-            });
-
-            it('opens the modal', () => {
-                expect(wrapper.vm.baseModalProps.isOpen).toBe(true);
-            });
-
-            describe('close', () => {
                 beforeEach(() => {
-                    expect(wrapper.vm.baseModalProps.isOpen).toBe(true);
-                    wrapper.vm.baseModalProps.close();
+                    wrapper = mount(UserModal, {
+                        localVue,
+                        propsData: {
+                            name,
+                        },
+                    });
                 });
 
-                it('closes the modal', () => {
+                it('gets an id', () => {
+                    expect(wrapper.vm.baseModalProps.id).toBe(name || 0);
+                });
+
+                it('has a default isOpen of false', () => {
                     expect(wrapper.vm.baseModalProps.isOpen).toBe(false);
                 });
-            });
 
-            describe('toggle with no arguments', () => {
-                beforeEach(() => {
-                    wrapper.vm.baseModalProps.toggle();
+                it('adds to the store list', () => {
+                    expect(wrapper.vm.$modals.store.list.length).toBe(1);
                 });
 
-                it('closes the modal', () => {
-                    expect(wrapper.vm.baseModalProps.isOpen).toBe(false);
-                });
-            });
+                describe('when destroyed', () => {
+                    let id;
 
-            describe('toggle with true', () => {
-                beforeEach(() => {
-                    wrapper.vm.baseModalProps.toggle(true);
+                    beforeEach(() => {
+                        id = wrapper.vm.baseModalProps.id;
+
+                        wrapper.vm.$modals.register();
+                        wrapper.vm.$modals.register();
+                        expect(wrapper.vm.$modals.store.list.length).toBe(3);
+                        wrapper.destroy();
+                    });
+
+                    it('removes the modal from the list', () => {
+                        expect(wrapper.vm.$modals.store.list.length).toBe(2);
+                        expect(wrapper.vm.$modals.store.list)
+                            .not.toContain(expect.objectContaining({ id }));
+                    });
                 });
 
-                it('does nothing', () => {
-                    expect(wrapper.vm.baseModalProps.isOpen).toBe(true);
+                describe('toggle with no arguments', () => {
+                    beforeEach(() => {
+                        wrapper.vm.baseModalProps.toggle();
+                    });
+
+                    it('opens the modal', () => {
+                        expect(wrapper.vm.baseModalProps.isOpen).toBe(true);
+                    });
+                });
+
+                describe('toggle with false', () => {
+                    beforeEach(() => {
+                        wrapper.vm.baseModalProps.toggle(false);
+                    });
+
+                    it('does nothing', () => {
+                        expect(wrapper.vm.baseModalProps.isOpen).toBe(false);
+                    });
+                });
+
+                describe('open', () => {
+                    beforeEach(() => {
+                        wrapper.vm.baseModalProps.open();
+                    });
+
+                    it('opens the modal', () => {
+                        expect(wrapper.vm.baseModalProps.isOpen).toBe(true);
+                    });
+
+                    describe('close', () => {
+                        beforeEach(() => {
+                            expect(wrapper.vm.baseModalProps.isOpen).toBe(true);
+                            wrapper.vm.baseModalProps.close();
+                        });
+
+                        it('closes the modal', () => {
+                            expect(wrapper.vm.baseModalProps.isOpen).toBe(false);
+                        });
+                    });
+
+                    describe('toggle with no arguments', () => {
+                        beforeEach(() => {
+                            wrapper.vm.baseModalProps.toggle();
+                        });
+
+                        it('closes the modal', () => {
+                            expect(wrapper.vm.baseModalProps.isOpen).toBe(false);
+                        });
+                    });
+
+                    describe('toggle with true', () => {
+                        beforeEach(() => {
+                            wrapper.vm.baseModalProps.toggle(true);
+                        });
+
+                        it('does nothing', () => {
+                            expect(wrapper.vm.baseModalProps.isOpen).toBe(true);
+                        });
+                    });
                 });
             });
         });

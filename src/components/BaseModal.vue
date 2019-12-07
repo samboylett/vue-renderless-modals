@@ -13,10 +13,17 @@
     export default {
         name: 'base-modal',
 
+        props: {
+            name: {
+                type: String,
+                default: null,
+            },
+        },
+
         data() {
             return {
                 store: this.$modals.store,
-                id: this.$modals.register(),
+                id: this.$modals.register(this.name),
             };
         },
 
